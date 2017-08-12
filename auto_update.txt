@@ -1,0 +1,399 @@
+"_VERSION 1481270284\n 
+Start auto_update.txt parsing\nmmc slc 0 1\nmmc rmgpt\n\n 
+# File Partition: set_partition\nmmc slc 0 1  
+#set_partition\nmmc rmgpt  
+#set_partition\nmmc create MBOOT 0x300000 200000  
+#set_partition\nmmc create MPOOL 0x200000 500000  
+#set_partition\nm…", 0
+"mc create KL 0x800000  
+#set_partition\nmmc create RFS 0x2000000  
+#set_partition\nmmc create customer 0x1000000  
+#set_partition\nmmc create MSLIB 0x6000000  
+#set_partition\nmmc create APP 0x5000000  
+#set_partition\nmmc create CONFIG 0x1400000  
+#set_partition\nmmc creat…", 0
+"e certificate 0x1000000  
+#set_partition\nmmc create customerbackup 0x1000000  
+#set_partition\nmmc create oad 0xA000000  
+#set_partition\nmmc create castdata 0x8000000  
+#set_partition\nmmc create castsystem 0x10000000  
+#set_partition\nmmc create castroot 0x8000000  
+#se…", 0
+"t_partition\nmmc create brickbackup 0x800000  
+#set_partition\nmmc create brickreserve 0x500000  
+#set_partition\nmmc create tee 0x600000  
+#set_partition\nmmc create RTPM 0x100000  
+#set_partition\nmmc create frc 0x100000  
+#set_partition\nmmc create DefEnv 0x4000  
+#set_p…", 0
+"artition\n\n 
+# File Partition: mboot\nfilepartload 0x25600000 $(UpgradeImage) 0x4000 0x2889  
+#mboot\nmscompress7 d 0 0x25600000 2889 0x22e00000  
+#mboot\ncrc32 0x22e00000 0x13800 0x25600000  
+#mboot\nmw 0x25600004 0xC396E939 4  
+#mboot\ncmp.b 0x25600000 0x25600004 4  
+#mbo…", 0
+"ot\nmmc write.boot 1 0x22E00000 $(filesize)  
+#mboot\nfilepartload 0x25600000 $(UpgradeImage) 0x14000 0x8e492  
+#mboot\nmscompress7 d 0 0x25600000 8e492 0x22e00000  
+#mboot\ncrc32 0x22e00000 0x197800 0x25600000  
+#mboot\nmw 0x25600004 0xA9F4A956 4  
+#mboot\ncmp.b 0x256000…", 0
+"00 0x25600004 4  
+#mboot\nmmc write.p 0x22E00000 MBOOT $(filesize)  
+#mboot\n\n 
+# File Partition: kernel\nfilepartload 0x25600000 $(UpgradeImage) 0xa4000 0x6561ab  
+#kernel\nmscompress7 d 0 0x25600000 6561ab 0x22e00000  
+#kernel\ncrc32 0x22e00000 0x701870 0x25600000  
+#ker…", 0
+"nel\nmw 0x25600004 0x3398B02A 4  
+#kernel\ncmp.b 0x25600000 0x25600004 4  
+#kernel\nmmc write.p 0x22E00000 KL 0x800000  
+#kernel\nsetenv LOAD_KERNEL mmc read.p 0x45000000 KL 0x800000\;  
+#kernel\nsetenv BOOT_KERNEL bootm 0x45000000\;  
+#kernel\nfilepartload 0x25600000 $(U…", 0
+"pgradeImage) 0x704000 0x13a  
+#kernel\nmscompress7 d 0 0x25600000 13a 0x22e00000  
+#kernel\ncrc32 0x22e00000 0x220 0x25600000  
+#kernel\nmw 0x25600004 0x7DA9CDCF 4  
+#kernel\ncmp.b 0x25600000 0x25600004 4  
+#kernel\nstore_secure_info kernelSign 0x22E00000   
+#kernel\nfilepa…", 0
+"rtload 0x25600000 $(UpgradeImage) 0x714000 0x13a  
+#kernel\nmscompress7 d 0 0x25600000 13a 0x22e00000  
+#kernel\ncrc32 0x22e00000 0x220 0x25600000  
+#kernel\nmw 0x25600004 0xBC0BA6C8 4  
+#kernel\ncmp.b 0x25600000 0x25600004 4  
+#kernel\nstore_secure_info keySetSign 0x22E…", 0
+00001a"00000   
+#kernel\nfilepartload 0x25600000 $(UpgradeImage) 0x724000 0x1d  
+#kernel\nmscompress7 d 0 0x25600000 1d 0x22e00000  
+#kernel\ncrc32 0x22e00000 0x524 0x25600000  
+#kernel\nmw 0x25600004 0x1BF8E9FD 4  
+#kernel\ncmp.b 0x25600000 0x25600004 4  
+#kernel\nstore_secure_in…", 0
+00001b"fo keySet 0x22E00000   
+#kernel\n\n 
+# File Partition: ROOTFS\nfilepartload 0x25600000 $(UpgradeImage) 0x734000 0x258f43  
+#ROOTFS\nmscompress7 d 0 0x25600000 258f43 0x22e00000  
+#ROOTFS\ncrc32 0x22e00000 0x257000 0x25600000  
+#ROOTFS\nmw 0x25600004 0x28298ED2 4  
+#ROOTFS\nc…", 0
+00001c"mp.b 0x25600000 0x25600004 4  
+#ROOTFS\nmmc write.p 0x22E00000 RFS 0x257000  
+#ROOTFS\nfilepartload 0x25600000 $(UpgradeImage) 0x994000 0x460  
+#ROOTFS\nmscompress7 d 0 0x25600000 460 0x22e00000  
+#ROOTFS\ncrc32 0x22e00000 0x1100 0x25600000  
+#ROOTFS\nmw 0x25600004 0xED6…", 0
+00001d"C958A 4  
+#ROOTFS\ncmp.b 0x25600000 0x25600004 4  
+#ROOTFS\nstore_secure_info ROOTFSSign 0x22E00000   
+#ROOTFS\n\n 
+# File Partition: customer\nfilepartload 0x25600000 $(UpgradeImage) 0x9a4000 0x4c665  
+#customer\nmscompress7 d 0 0x25600000 4c665 0x22e00000  
+#customer\ncrc3…", 0
+00001e"2 0x22e00000 0x1000000 0x25600000  
+#customer\nmw 0x25600004 0xBEDD4E59 4  
+#customer\ncmp.b 0x25600000 0x25600004 4  
+#customer\nmmc write.p 0x22E00000 customer 0x1000000  
+#customer\n\n 
+# File Partition: mslib\nfilepartload 0x25600000 $(UpgradeImage) 0x9f4000 0xc756a8 …", 0
+00001f" 
+#mslib\nmscompress7 d 0 0x25600000 c756a8 0x22e00000  
+#mslib\ncrc32 0x22e00000 0x2800000 0x25600000  
+#mslib\nmw 0x25600004 0xE6FCBB39 4  
+#mslib\ncmp.b 0x25600000 0x25600004 4  
+#mslib\nmmc write.p 0x22E00000 MSLIB 0x2800000  
+#mslib\nfilepartload 0x25600000 $(UpgradeIm…", 0
+"age) 0x1674000 0x413ac5  
+#mslib\nmscompress7 d 0 0x25600000 413ac5 0x22e00000  
+#mslib\ncrc32 0x22e00000 0x2800000 0x25600000  
+#mslib\nmw 0x25600004 0x6C884A8C 4  
+#mslib\ncmp.b 0x25600000 0x25600004 4  
+#mslib\nmmc write.p.continue 0x22E00000 MSLIB 0x14000 0x2800000  
+#…", 0
+"mslib\nfilepartload 0x25600000 $(UpgradeImage) 0x1a94000 0x992  
+#mslib\nmscompress7 d 0 0x25600000 992 0x22e00000  
+#mslib\ncrc32 0x22e00000 0x1000000 0x25600000  
+#mslib\nmw 0x25600004 0xA47CA14A 4  
+#mslib\ncmp.b 0x25600000 0x25600004 4  
+#mslib\nmmc write.p.continue 0…", 0
+"x22E00000 MSLIB 0x28000 0x1000000  
+#mslib\nfilepartload 0x25600000 $(UpgradeImage) 0x1aa4000 0xe75  
+#mslib\nmscompress7 d 0 0x25600000 e75 0x22e00000  
+#mslib\ncrc32 0x22e00000 0x1100 0x25600000  
+#mslib\nmw 0x25600004 0xE2C2C628 4  
+#mslib\ncmp.b 0x25600000 0x25600004…", 0
+" 4  
+#mslib\nstore_secure_info mslibSign 0x22E00000   
+#mslib\n\n 
+# File Partition: applications\nfilepartload 0x25600000 $(UpgradeImage) 0x1ab4000 0x77c173  
+#applications\nmscompress7 d 0 0x25600000 77c173 0x22e00000  
+#applications\ncrc32 0x22e00000 0x2800000 0x256000…", 0
+"00  
+#applications\nmw 0x25600004 0x748CF25B 4  
+#applications\ncmp.b 0x25600000 0x25600004 4  
+#applications\nmmc write.p 0x22E00000 APP 0x2800000  
+#applications\nfilepartload 0x25600000 $(UpgradeImage) 0x2234000 0xb4bc41  
+#applications\nmscompress7 d 0 0x25600000 b4b…", 0
+"c41 0x22e00000  
+#applications\ncrc32 0x22e00000 0x2800000 0x25600000  
+#applications\nmw 0x25600004 0x3CE90893 4  
+#applications\ncmp.b 0x25600000 0x25600004 4  
+#applications\nmmc write.p.continue 0x22E00000 APP 0x14000 0x2800000  
+#applications\nfilepartload 0x2560000…", 0
+"0 $(UpgradeImage) 0x2d84000 0x1080  
+#applications\nmscompress7 d 0 0x25600000 1080 0x22e00000  
+#applications\ncrc32 0x22e00000 0x1100 0x25600000  
+#applications\nmw 0x25600004 0x0346C1FF 4  
+#applications\ncmp.b 0x25600000 0x25600004 4  
+#applications\nstore_secure_inf…", 0
+"o applicationsSign 0x22E00000   
+#applications\n\n 
+# File Partition: config\nfilepartload 0x25600000 $(UpgradeImage) 0x2d94000 0x10b377  
+#config\nmscompress7 d 0 0x25600000 10b377 0x22e00000  
+#config\ncrc32 0x22e00000 0x1400000 0x25600000  
+#config\nmw 0x25600004 0xF21…", 0
+"55E51 4  
+#config\ncmp.b 0x25600000 0x25600004 4  
+#config\nmmc write.p 0x22E00000 CONFIG 0x1400000  
+#config\nfilepartload 0x25600000 $(UpgradeImage) 0x2ea4000 0x107a  
+#config\nmscompress7 d 0 0x25600000 107a 0x22e00000  
+#config\ncrc32 0x22e00000 0x1100 0x25600000  
+#co…", 0
+"nfig\nmw 0x25600004 0xE43F4151 4  
+#config\ncmp.b 0x25600000 0x25600004 4  
+#config\nstore_secure_info configSign 0x22E00000   
+#config\n\n 
+# File Partition: certificate\nfilepartload 0x25600000 $(UpgradeImage) 0x2eb4000 0x10c14  
+#certificate\nmscompress7 d 0 0x25600000 …", 0
+00002a"10c14 0x22e00000  
+#certificate\ncrc32 0x22e00000 0x1000000 0x25600000  
+#certificate\nmw 0x25600004 0x73684BB0 4  
+#certificate\ncmp.b 0x25600000 0x25600004 4  
+#certificate\nmmc write.p 0x22E00000 certificate 0x1000000  
+#certificate\n\n 
+# File Partition: customerbackup\n…", 0
+00002b"filepartload 0x25600000 $(UpgradeImage) 0x2ed4000 0x40f85  
+#customerbackup\nmscompress7 d 0 0x25600000 40f85 0x22e00000  
+#customerbackup\ncrc32 0x22e00000 0x1000000 0x25600000  
+#customerbackup\nmw 0x25600004 0x84B28A30 4  
+#customerbackup\ncmp.b 0x25600000 0x256000…", 0
+00002c"04 4  
+#customerbackup\nmmc write.p 0x22E00000 customerbackup 0x1000000  
+#customerbackup\n\n 
+# File Partition: tee\nfilepartload 0x25600000 $(UpgradeImage) 0x2f24000 0x2437f0  
+#tee\nmscompress7 d 0 0x25600000 2437f0 0x22e00000  
+#tee\ncrc32 0x22e00000 0x47a830 0x256000…", 0
+00002d"00  
+#tee\nmw 0x25600004 0xDC50E542 4  
+#tee\ncmp.b 0x25600000 0x25600004 4  
+#tee\nmmc write.p 0x22E00000 tee 0x600000  
+#tee\nsetenv LOAD_NUTTX mmc read.p 0x7EF00000 tee 0x600000\;  
+#tee\nsetenv BOOT_NUTTX bootNuttx 0x3EF00000\;  
+#tee\nfilepartload 0x25600000 $(UpgradeI…", 0
+00002e"mage) 0x3174000 0x13b  
+#tee\nmscompress7 d 0 0x25600000 13b 0x22e00000  
+#tee\ncrc32 0x22e00000 0x220 0x25600000  
+#tee\nmw 0x25600004 0xF468999D 4  
+#tee\ncmp.b 0x25600000 0x25600004 4  
+#tee\nstore_secure_info teeSign 0x22E00000   
+#tee\nfilepartload 0x25600000 $(Upgrade…", 0
+00002f"Image) 0x3184000 0x216  
+#tee\nmscompress7 d 0 0x25600000 216 0x22e00000  
+#tee\ncrc32 0x22e00000 0x8e4 0x25600000  
+#tee\nmw 0x25600004 0x789698D5 4  
+#tee\ncmp.b 0x25600000 0x25600004 4  
+#tee\nstore_nuttx_config NuttxConfig 0x22E00000   
+#tee\n\n 
+# File Partition: castdata…", 0
+"\nfilepartload 0x25600000 $(UpgradeImage) 0x3194000 0x188a  
+#castdata\nmscompress7 d 0 0x25600000 188a 0x22e00000  
+#castdata\ncrc32 0x22e00000 0x2800000 0x25600000  
+#castdata\nmw 0x25600004 0xBDBAC862 4  
+#castdata\ncmp.b 0x25600000 0x25600004 4  
+#castdata\nmmc write.…", 0
+"p 0x22E00000 castdata 0x2800000  
+#castdata\nfilepartload 0x25600000 $(UpgradeImage) 0x31a4000 0x1772  
+#castdata\nmscompress7 d 0 0x25600000 1772 0x22e00000  
+#castdata\ncrc32 0x22e00000 0x2800000 0x25600000  
+#castdata\nmw 0x25600004 0xFEEB63EA 4  
+#castdata\ncmp.b 0x2…", 0
+"5600000 0x25600004 4  
+#castdata\nmmc write.p.continue 0x22E00000 castdata 0x14000 0x2800000  
+#castdata\nfilepartload 0x25600000 $(UpgradeImage) 0x31b4000 0x1772  
+#castdata\nmscompress7 d 0 0x25600000 1772 0x22e00000  
+#castdata\ncrc32 0x22e00000 0x2800000 0x2560000…", 0
+"0  
+#castdata\nmw 0x25600004 0xFEEB63EA 4  
+#castdata\ncmp.b 0x25600000 0x25600004 4  
+#castdata\nmmc write.p.continue 0x22E00000 castdata 0x28000 0x2800000  
+#castdata\nfilepartload 0x25600000 $(UpgradeImage) 0x31c4000 0x4f5  
+#castdata\nmscompress7 d 0 0x25600000 4f5 0…", 0
+"x22e00000  
+#castdata\ncrc32 0x22e00000 0x800000 0x25600000  
+#castdata\nmw 0x25600004 0x1AD2BC45 4  
+#castdata\ncmp.b 0x25600000 0x25600004 4  
+#castdata\nmmc write.p.continue 0x22E00000 castdata 0x3c000 0x800000  
+#castdata\n\n 
+# File Partition: castsystem\nfilepartload 0…", 0
+"x25600000 $(UpgradeImage) 0x31d4000 0x1038167  
+#castsystem\nmscompress7 d 0 0x25600000 1038167 0x22e00000  
+#castsystem\ncrc32 0x22e00000 0x2800000 0x25600000  
+#castsystem\nmw 0x25600004 0x390CC7E1 4  
+#castsystem\ncmp.b 0x25600000 0x25600004 4  
+#castsystem\nmmc write…", 0
+".p 0x22E00000 castsystem 0x2800000  
+#castsystem\nfilepartload 0x25600000 $(UpgradeImage) 0x4214000 0xef39ec  
+#castsystem\nmscompress7 d 0 0x25600000 ef39ec 0x22e00000  
+#castsystem\ncrc32 0x22e00000 0x2800000 0x25600000  
+#castsystem\nmw 0x25600004 0xFA826C55 4  
+#cas…", 0
+"tsystem\ncmp.b 0x25600000 0x25600004 4  
+#castsystem\nmmc write.p.continue 0x22E00000 castsystem 0x14000 0x2800000  
+#castsystem\nfilepartload 0x25600000 $(UpgradeImage) 0x5114000 0xb2ea45  
+#castsystem\nmscompress7 d 0 0x25600000 b2ea45 0x22e00000  
+#castsystem\ncrc32…", 0
+" 0x22e00000 0x2800000 0x25600000  
+#castsystem\nmw 0x25600004 0xE5D26F5F 4  
+#castsystem\ncmp.b 0x25600000 0x25600004 4  
+#castsystem\nmmc write.p.continue 0x22E00000 castsystem 0x28000 0x2800000  
+#castsystem\nfilepartload 0x25600000 $(UpgradeImage) 0x5c44000 0x701a4…", 0
+"5  
+#castsystem\nmscompress7 d 0 0x25600000 701a45 0x22e00000  
+#castsystem\ncrc32 0x22e00000 0x2800000 0x25600000  
+#castsystem\nmw 0x25600004 0x2C79503B 4  
+#castsystem\ncmp.b 0x25600000 0x25600004 4  
+#castsystem\nmmc write.p.continue 0x22E00000 castsystem 0x3c000 0x2…", 0
+00003a"800000  
+#castsystem\nfilepartload 0x25600000 $(UpgradeImage) 0x6354000 0x1772  
+#castsystem\nmscompress7 d 0 0x25600000 1772 0x22e00000  
+#castsystem\ncrc32 0x22e00000 0x2800000 0x25600000  
+#castsystem\nmw 0x25600004 0xFEEB63EA 4  
+#castsystem\ncmp.b 0x25600000 0x25600…", 0
+00003b"004 4  
+#castsystem\nmmc write.p.continue 0x22E00000 castsystem 0x50000 0x2800000  
+#castsystem\nfilepartload 0x25600000 $(UpgradeImage) 0x6364000 0x1772  
+#castsystem\nmscompress7 d 0 0x25600000 1772 0x22e00000  
+#castsystem\ncrc32 0x22e00000 0x2800000 0x25600000  
+#ca…", 0
+00003c"stsystem\nmw 0x25600004 0xFEEB63EA 4  
+#castsystem\ncmp.b 0x25600000 0x25600004 4  
+#castsystem\nmmc write.p.continue 0x22E00000 castsystem 0x64000 0x2800000  
+#castsystem\nfilepartload 0x25600000 $(UpgradeImage) 0x6374000 0x992  
+#castsystem\nmscompress7 d 0 0x2560000…", 0
+00003d"0 992 0x22e00000  
+#castsystem\ncrc32 0x22e00000 0x1000000 0x25600000  
+#castsystem\nmw 0x25600004 0xA47CA14A 4  
+#castsystem\ncmp.b 0x25600000 0x25600004 4  
+#castsystem\nmmc write.p.continue 0x22E00000 castsystem 0x78000 0x1000000  
+#castsystem\n\n 
+# File Partition: cast…", 0
+00003e"root\nfilepartload 0x25600000 $(UpgradeImage) 0x6384000 0x113d94e  
+#castroot\nmscompress7 d 0 0x25600000 113d94e 0x22e00000  
+#castroot\ncrc32 0x22e00000 0x2800000 0x25600000  
+#castroot\nmw 0x25600004 0x94647EE2 4  
+#castroot\ncmp.b 0x25600000 0x25600004 4  
+#castroot\n…", 0
+00003f"mmc write.p 0x22E00000 castroot 0x2800000  
+#castroot\nfilepartload 0x25600000 $(UpgradeImage) 0x74c4000 0xe80d7f  
+#castroot\nmscompress7 d 0 0x25600000 e80d7f 0x22e00000  
+#castroot\ncrc32 0x22e00000 0x2800000 0x25600000  
+#castroot\nmw 0x25600004 0x05AD9A11 4  
+#cast…", 0
+"root\ncmp.b 0x25600000 0x25600004 4  
+#castroot\nmmc write.p.continue 0x22E00000 castroot 0x14000 0x2800000  
+#castroot\nfilepartload 0x25600000 $(UpgradeImage) 0x8354000 0x512bce  
+#castroot\nmscompress7 d 0 0x25600000 512bce 0x22e00000  
+#castroot\ncrc32 0x22e00000 0…", 0
+"x2800000 0x25600000  
+#castroot\nmw 0x25600004 0x1C212DDB 4  
+#castroot\ncmp.b 0x25600000 0x25600004 4  
+#castroot\nmmc write.p.continue 0x22E00000 castroot 0x28000 0x2800000  
+#castroot\nfilepartload 0x25600000 $(UpgradeImage) 0x8874000 0x4f5  
+#castroot\nmscompress7 d …", 0
+"0 0x25600000 4f5 0x22e00000  
+#castroot\ncrc32 0x22e00000 0x800000 0x25600000  
+#castroot\nmw 0x25600004 0x1AD2BC45 4  
+#castroot\ncmp.b 0x25600000 0x25600004 4  
+#castroot\nmmc write.p.continue 0x22E00000 castroot 0x3c000 0x800000  
+#castroot\n\n 
+# File Partition: RT_PM\nf…", 0
+"ilepartload 0x25600000 $(UpgradeImage) 0x8884000 0x30ce  
+#RT_PM\nmscompress7 d 0 0x25600000 30ce 0x22e00000  
+#RT_PM\ncrc32 0x22e00000 0x10000 0x25600000  
+#RT_PM\nmw 0x25600004 0x1F2D787C 4  
+#RT_PM\ncmp.b 0x25600000 0x25600004 4  
+#RT_PM\nmmc erase.p RTPM  
+#RT_PM\nmmc w…", 0
+"rite.p 0x22E00000 RTPM $(filesize) 1  
+#RT_PM\n\n 
+# File Partition: brickbackup\nfilepartload 0x25600000 $(UpgradeImage) 0x8894000 0xa1d23  
+#brickbackup\nmscompress7 d 0 0x25600000 a1d23 0x22e00000  
+#brickbackup\ncrc32 0x22e00000 0x800000 0x25600000  
+#brickbackup\nmw …", 0
+"0x25600004 0x12FBAE1B 4  
+#brickbackup\ncmp.b 0x25600000 0x25600004 4  
+#brickbackup\nmmc write.p 0x22E00000 brickbackup 0x800000  
+#brickbackup\n\n 
+# File Partition: brickreserve\nfilepartload 0x25600000 $(UpgradeImage) 0x8944000 0x475  
+#brickreserve\nmscompress7 d 0 0…", 0
+"x25600000 475 0x22e00000  
+#brickreserve\ncrc32 0x22e00000 0x500000 0x25600000  
+#brickreserve\nmw 0x25600004 0xF1DA9883 4  
+#brickreserve\ncmp.b 0x25600000 0x25600004 4  
+#brickreserve\nmmc write.p 0x22E00000 brickreserve 0x500000  
+#brickreserve\n\n 
+# File Partition: frc…", 0
+"\nfilepartload 0x25600000 $(UpgradeImage) 0x8954000 0x25a43  
+#frc\nmscompress7 d 0 0x25600000 25a43 0x22e00000  
+#frc\ncrc32 0x22e00000 0x73010 0x25600000  
+#frc\nmw 0x25600004 0xFC0791E2 4  
+#frc\ncmp.b 0x25600000 0x25600004 4  
+#frc\nmmc write.p 0x22E00000 frc $(filesi…", 0
+"ze)  
+#frc\n\n 
+# File Partition: oad\nfilepartload 0x25600000 $(UpgradeImage) 0x8984000 0x1870  
+#oad\nmscompress7 d 0 0x25600000 1870 0x22e00000  
+#oad\ncrc32 0x22e00000 0x2800000 0x25600000  
+#oad\nmw 0x25600004 0x123A7B2C 4  
+#oad\ncmp.b 0x25600000 0x25600004 4  
+#oad\nmmc …", 0
+"write.p 0x22E00000 oad 0x2800000  
+#oad\nfilepartload 0x25600000 $(UpgradeImage) 0x8994000 0x1772  
+#oad\nmscompress7 d 0 0x25600000 1772 0x22e00000  
+#oad\ncrc32 0x22e00000 0x2800000 0x25600000  
+#oad\nmw 0x25600004 0xFEEB63EA 4  
+#oad\ncmp.b 0x25600000 0x25600004 4  
+#oa…", 0
+00004a"d\nmmc write.p.continue 0x22E00000 oad 0x14000 0x2800000  
+#oad\nfilepartload 0x25600000 $(UpgradeImage) 0x89a4000 0x1772  
+#oad\nmscompress7 d 0 0x25600000 1772 0x22e00000  
+#oad\ncrc32 0x22e00000 0x2800000 0x25600000  
+#oad\nmw 0x25600004 0xFEEB63EA 4  
+#oad\ncmp.b 0x25…", 0
+00004b"600000 0x25600004 4  
+#oad\nmmc write.p.continue 0x22E00000 oad 0x28000 0x2800000  
+#oad\nfilepartload 0x25600000 $(UpgradeImage) 0x89b4000 0x17d6  
+#oad\nmscompress7 d 0 0x25600000 17d6 0x22e00000  
+#oad\ncrc32 0x22e00000 0x2800000 0x25600000  
+#oad\nmw 0x25600004 0x613…", 0
+00004c"78F40 4  
+#oad\ncmp.b 0x25600000 0x25600004 4  
+#oad\nmmc write.p.continue 0x22E00000 oad 0x3c000 0x2800000  
+#oad\n\n 
+# File Partition: set_config\nsetenv MS_RFS root=/dev/mmcblk0p4 rootfstype=squashfs rw rootwait  
+#set_config\nsetenv bootargs androidboot.hardware=Comp…", 0
+00004d"alMSD95M androidboot.console=ttyS0 console=ttyS0,115200 $(MS_RFS) init=/init  
+#set_config\nsetenv verify y  
+#set_config\nsetenv bootcmd $(LOAD_KERNEL) $(LOAD_NUTTX) $(BOOT_NUTTX) delay 2000\; $(BOOT_KERNEL)  
+#set_config\nsetenv str_crc 2  
+#set_config\nsetenv bootl…", 0
+00004e"ogo_gopidx 2  
+#set_config\nsetenv factory_poweron_mode memory  
+#set_config\nsetenv anti_rollback enable  
+#set_config\nsetenv db_table 0  
+#set_config\ntestmode autotest  
+#set_config\nBrickTerminator backup_env\nsetenv MstarUpgrade_complete 1\nsetenv AP_VERSION 14812702…", 0
+00004f"84\nsaveenv\nprintenv\nreset\n% <- this is end of script symbol\n", 0
+00004f65         db  0x00 ; '.'
